@@ -1,0 +1,27 @@
+require_relative '../../node_modules/.pnpm/@capacitor+ios@6.2.1_@capacitor+core@6.2.1/node_modules/@capacitor/ios/scripts/pods_helpers'
+
+platform :ios, '13.0'
+use_frameworks!
+
+# workaround to avoid Xcode caching of Pods that requires
+# Product -> Clean Build Folder after new Cordova plugins installed
+# Requires CocoaPods 1.6 or newer
+install! 'cocoapods', :disable_input_output_paths => true
+
+def capacitor_pods
+  pod 'Capacitor', :path => '../../node_modules/.pnpm/@capacitor+ios@6.2.1_@capacitor+core@6.2.1/node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../node_modules/.pnpm/@capacitor+ios@6.2.1_@capacitor+core@6.2.1/node_modules/@capacitor/ios'
+  pod 'CapacitorBrowser', :path => '../../node_modules/.pnpm/@capacitor+browser@6.0.5_@capacitor+core@6.2.1/node_modules/@capacitor/browser'
+  pod 'CapacitorSplashScreen', :path => '../../node_modules/.pnpm/@capacitor+splash-screen@6.0.3_@capacitor+core@6.2.1/node_modules/@capacitor/splash-screen'
+  pod 'CapacitorFirebaseCrashlytics', :path => '../../node_modules/.pnpm/@capacitor-firebase+crashlytics@6.3.1_@capacitor+core@6.2.1/node_modules/@capacitor-firebase/crashlytics'
+  pod 'CapacitorMlkitBarcodeScanning', :path => '../../node_modules/.pnpm/@capacitor-mlkit+barcode-scanning@6.2.0_@capacitor+core@6.2.1/node_modules/@capacitor-mlkit/barcode-scanning'
+end
+
+target 'App' do
+  capacitor_pods
+  # Add your Pods here
+end
+
+post_install do |installer|
+  assertDeploymentTarget(installer)
+end
